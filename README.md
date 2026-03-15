@@ -4,6 +4,23 @@
 
 Sample repositories for smoke testing Ballast language detection and install flows.
 
+## Ballast
+
+- Repository: https://github.com/everydaydevopsio/ballast
+- Installation guide: https://github.com/everydaydevopsio/ballast/blob/main/docs/installation.md
+
+Quick install (Go CLI):
+
+```bash
+go install github.com/everydaydevopsio/ballast/packages/ballast-go/cmd/ballast-go@latest
+```
+
+If you want the `ballast` command name locally, add an alias (for example in your shell profile):
+
+```bash
+alias ballast=ballast-go
+```
+
 ## Layout
 
 - `go-sample/`
