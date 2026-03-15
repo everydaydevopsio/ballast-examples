@@ -10,6 +10,48 @@ Sample repositories for smoke testing Ballast language detection and install flo
 - `python-sample/`
 - `typescript-sample/`
 
+## Run Smoke Tests
+
+### 1) Run locally (host)
+
+From repo root:
+
+```bash
+./smoke.sh
+```
+
+This runs:
+
+- `ballast install --target cursor --agent linting --yes` in each sample project
+
+Prerequisite: `ballast` must be available on your PATH.
+
+### 2) Run in Docker (preinstalled CLIs)
+
+If your Ballast repo is next to this one:
+
+```bash
+cd ../ballast
+docker build -f Dockerfile.smoke -t ballast-smoke .
+docker run --rm -it -v "$(pwd)/../ballast-examples:/workspace/examples" ballast-smoke bash -lc "cd /workspace/examples && ./smoke.sh"
+```
+
+### 3) Run in Docker (lazy-download CLIs)
+
+```bash
+cd ../ballast
+docker build -f Dockerfile.smoke --build-arg PREINSTALL_ALL_BINARIES=0 -t ballast-smoke-lazy .
+docker run --rm -it -v "$(pwd)/../ballast-examples:/workspace/examples" ballast-smoke-lazy bash -lc "cd /workspace/examples && ./smoke.sh"
+```
+
+### 4) Run in GitHub Actions
+
+The workflow runs automatically on push/PR. To trigger manually:
+
+```bash
+gh workflow run smoke.yml
+```
+
 ## CI Smoke Matrix
 
 GitHub Actions runs smoke tests on push/PR for all three samples.
@@ -22,38 +64,10 @@ Each matrix job:
 - runs `ballast install --target cursor --agent linting --yes`
 - verifies generated rule + language-specific config file
 
-## Quick Smoke Test (Local)
-
-From this folder, run:
-
-```bash
-for dir in go-sample python-sample typescript-sample; do
-  echo "==> $dir"
-  (cd "$dir" && ballast install --target cursor --agent linting --yes)
-done
-```
-
-## Container Smoke Test
-
-If your Ballast repo is next to this one:
-
-```bash
-cd ../ballast
-docker build -f Dockerfile.smoke -t ballast-smoke .
-docker run --rm -it -v "$(pwd)/../ballast-examples:/workspace/examples" ballast-smoke bash
-```
-
-Inside the container:
-
-```bash
-cd /workspace/examples
-for dir in go-sample python-sample typescript-sample; do
-  echo "==> $dir"
-  (cd "$dir" && ballast install --target cursor --agent linting --yes)
-done
-```
-
-Expected output:
+## Expected Output
 
 - Each sample gets `.cursor/rules/linting.mdc`.
-- Config files are language-specific (`.rulesrc.go.json`, `.rulesrc.python.json`, `.rulesrc.ts.json`).
+- Config files are language-specific:
+  - `.rulesrc.go.json`
+  - `.rulesrc.python.json`
+  - `.rulesrc.ts.json`
