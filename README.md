@@ -1,7 +1,5 @@
 # ballast-examples
 
-[![Examples Smoke Tests](https://github.com/everydaydevopsio/ballast/actions/workflows/examples-smoke.yml/badge.svg)](https://github.com/everydaydevopsio/ballast/actions/workflows/examples-smoke.yml)
-
 Sample repositories for smoke testing Ballast language detection and install flows.
 
 ## Ballast
