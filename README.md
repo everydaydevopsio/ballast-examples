@@ -62,12 +62,8 @@ Each matrix job:
 
 - builds `ballast` wrapper + language CLIs from source
 - runs `ballast install --target cursor --agent linting --yes`
-- verifies generated rule + language-specific config file
+- verifies generated rule file
 
 ## Expected Output
 
 - Each sample gets `.cursor/rules/linting.mdc`.
-- Config files are language-specific:
-  - `.rulesrc.go.json`
-  - `.rulesrc.python.json`
-  - `.rulesrc.ts.json`

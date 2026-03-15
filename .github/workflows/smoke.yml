@@ -18,11 +18,8 @@ jobs:
       matrix:
         include:
           - sample: go-sample
-            expected_config: .rulesrc.go.json
           - sample: python-sample
-            expected_config: .rulesrc.python.json
           - sample: typescript-sample
-            expected_config: .rulesrc.ts.json
 
     steps:
       - name: Checkout examples repo
@@ -59,8 +56,8 @@ jobs:
           set -euo pipefail
           mkdir -p "$GITHUB_WORKSPACE/.ci/bin"
 
-          go build -C ballast/packages/ballast-go -o "$GITHUB_WORKSPACE/.ci/bin/ballast" ./cmd/ballast
-          go build -C ballast/packages/ballast-go -o "$GITHUB_WORKSPACE/.ci/bin/ballast-go" ./cmd/ballast
+          go build -C ballast/packages/ballast-go -o "$GITHUB_WORKSPACE/.ci/bin/ballast" ./cmd/ballast-go
+          go build -C ballast/packages/ballast-go -o "$GITHUB_WORKSPACE/.ci/bin/ballast-go" ./cmd/ballast-go
 
           pnpm --dir ballast install --frozen-lockfile
           pnpm --dir ballast --filter @everydaydevopsio/ballast run build
@@ -91,4 +88,3 @@ jobs:
         run: |
           set -euo pipefail
           test -f "${{ matrix.sample }}/.cursor/rules/linting.mdc"
-          test -f "${{ matrix.sample }}/${{ matrix.expected_config }}"
