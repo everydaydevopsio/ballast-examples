@@ -1,0 +1,25 @@
+# Ballast-generated files
+.rulesrc*.json
+AGENTS.md
+.cursor/
+.claude/
+.codex/
+.opencode/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node/TypeScript
+node_modules/
+dist/
+
+# Go
+bin/
+*.test
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
