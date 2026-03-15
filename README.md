@@ -1,6 +1,6 @@
 # ballast-examples
 
-[![Smoke Tests](https://github.com/everydaydevopsio/ballast-examples/actions/workflows/smoke.yml/badge.svg)](https://github.com/everydaydevopsio/ballast-examples/actions/workflows/smoke.yml)
+[![Examples Smoke Tests](https://github.com/everydaydevopsio/ballast/actions/workflows/examples-smoke.yml/badge.svg)](https://github.com/everydaydevopsio/ballast/actions/workflows/examples-smoke.yml)
 
 Sample repositories for smoke testing Ballast language detection and install flows.
 
@@ -46,17 +46,17 @@ docker run --rm -it -v "$(pwd)/../ballast-examples:/workspace/examples" ballast-
 
 ### 4) Run in GitHub Actions
 
-The workflow runs automatically on push/PR. To trigger manually:
+Smoke tests run from the `ballast` repository workflow. To trigger manually:
 
 ```bash
-gh workflow run smoke.yml
+gh workflow run examples-smoke.yml --repo everydaydevopsio/ballast
 ```
 
 ## CI Smoke Matrix
 
-GitHub Actions runs smoke tests on push/PR for all three samples.
+GitHub Actions runs smoke tests on push/PR in `ballast` for all three samples.
 
-Workflow file: `.github/workflows/smoke.yml`
+Workflow file: `ballast/.github/workflows/examples-smoke.yml`
 
 Each matrix job:
 
