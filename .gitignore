@@ -1,10 +1,18 @@
 # Ballast-generated files
 .rulesrc*.json
+**/.rulesrc*.json
 AGENTS.md
+**/AGENTS.md
+
+# Agent output directories (all depths)
 .cursor/
+**/.cursor/
 .claude/
+**/.claude/
 .codex/
+**/.codex/
 .opencode/
+**/.opencode/
 
 # Python
 __pycache__/
