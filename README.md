@@ -2,6 +2,8 @@
 
 Sample repositories for smoke testing Ballast language detection and install flows.
 
+TypeScript, Python, and Go participate in wrapper auto-detection today. The Ansible sample exercises the shared language-profile support through `ballast-go install --language ansible`.
+
 ## Ballast
 
 - Repository: https://github.com/everydaydevopsio/ballast
@@ -24,6 +26,7 @@ alias ballast=ballast-go
 - `go-sample/`
 - `python-sample/`
 - `typescript-sample/`
+- `ansible-sample/`
 
 ## Run Smoke Tests
 
@@ -37,9 +40,10 @@ From repo root:
 
 This runs:
 
-- `ballast install --target cursor --agent linting --yes` in each sample project
+- `ballast install --target cursor --agent linting --yes` in `go-sample/`, `python-sample/`, and `typescript-sample/`
+- `ballast-go install --language ansible --target cursor --agent linting --yes` in `ansible-sample/`
 
-Prerequisite: `ballast` must be available on your PATH.
+Prerequisite: `ballast` and `ballast-go` must be available on your PATH.
 
 ### 2) Run in Docker (preinstalled CLIs)
 
@@ -69,7 +73,7 @@ gh workflow run examples-smoke.yml --repo everydaydevopsio/ballast
 
 ## CI Smoke Matrix
 
-GitHub Actions runs smoke tests on push/PR in `ballast` for all three samples.
+GitHub Actions runs smoke tests on push/PR in `ballast` for all four samples.
 
 Workflow file: `ballast/.github/workflows/examples-smoke.yml`
 
@@ -81,4 +85,7 @@ Each matrix job:
 
 ## Expected Output
 
-- Each sample gets `.cursor/rules/linting.mdc`.
+- `go-sample/` gets `.cursor/rules/go-linting.mdc`
+- `python-sample/` gets `.cursor/rules/python-linting.mdc`
+- `typescript-sample/` gets `.cursor/rules/typescript-linting.mdc`
+- `ansible-sample/` gets `.cursor/rules/ansible-linting.mdc`
