@@ -2,6 +2,8 @@
 
 Sample repositories for smoke testing Ballast language detection and install flows.
 
+TypeScript, Python, and Go participate in wrapper auto-detection today. The Ansible sample exercises the shared language-profile support through `ballast-go install --language ansible`.
+
 ## Ballast
 
 - Repository: https://github.com/everydaydevopsio/ballast
@@ -13,7 +15,7 @@ Quick install (Go CLI):
 go install github.com/everydaydevopsio/ballast/packages/ballast-go/cmd/ballast-go@latest
 ```
 
-If you want the `ballast` command name locally, add an alias (for example in your shell profile):
+If you only have `ballast-go` installed and want the `ballast` command name locally, add an alias (for example in your shell profile):
 
 ```bash
 alias ballast=ballast-go
@@ -24,6 +26,8 @@ alias ballast=ballast-go
 - `go-sample/`
 - `python-sample/`
 - `typescript-sample/`
+- `ansible-sample/`
+  Includes both `hosts.ini` and `hosts.ini.example` so the fixture is runnable without renaming files.
 
 ## Run Smoke Tests
 
@@ -37,9 +41,10 @@ From repo root:
 
 This runs:
 
-- `ballast install --target cursor --agent linting --yes` in each sample project
+- `ballast install --target cursor --agent linting --yes` in `go-sample/`, `python-sample/`, and `typescript-sample/`
+- `ballast-go install --language ansible --target cursor --agent linting --yes` in `ansible-sample/`
 
-Prerequisite: `ballast` must be available on your PATH.
+Prerequisite: `ballast` must resolve on your PATH for the Go/Python/TypeScript samples, and `ballast-go` must also be available for the Ansible sample.
 
 ### 2) Run in Docker (preinstalled CLIs)
 
@@ -69,16 +74,20 @@ gh workflow run examples-smoke.yml --repo everydaydevopsio/ballast
 
 ## CI Smoke Matrix
 
-GitHub Actions runs smoke tests on push/PR in `ballast` for all three samples.
+GitHub Actions runs smoke tests on push/PR in `ballast` for all four samples.
 
 Workflow file: `ballast/.github/workflows/examples-smoke.yml`
 
 Each matrix job:
 
 - builds `ballast` wrapper + language CLIs from source
-- runs `ballast install --target cursor --agent linting --yes`
+- runs `ballast install --target cursor --agent linting --yes` for Go/Python/TypeScript
+- runs `ballast-go install --language ansible --target cursor --agent linting --yes` for Ansible
 - verifies generated rule file
 
 ## Expected Output
 
-- Each sample gets `.cursor/rules/linting.mdc`.
+- `go-sample/` gets `.cursor/rules/go-linting.mdc`
+- `python-sample/` gets `.cursor/rules/python-linting.mdc`
+- `typescript-sample/` gets `.cursor/rules/typescript-linting.mdc`
+- `ansible-sample/` gets `.cursor/rules/ansible-linting.mdc`
