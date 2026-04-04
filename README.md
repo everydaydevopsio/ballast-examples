@@ -9,13 +9,13 @@ TypeScript, Python, Go, Ansible, and Terraform all participate in wrapper auto-d
 - Repository: https://github.com/everydaydevopsio/ballast
 - Installation guide: https://github.com/everydaydevopsio/ballast/blob/main/docs/installation.md
 
-Quick install (Go backend CLI):
+Quick install (wrapper CLI):
 
 ```bash
-go install github.com/everydaydevopsio/ballast/packages/ballast-go/cmd/ballast-go@latest
+go install github.com/everydaydevopsio/ballast/cli/ballast@latest
 ```
 
-For these example smoke tests, the `ballast` wrapper command must resolve on your PATH. If you are only testing the backend directly, use `ballast-go install --language <lang> ...` instead of wrapper auto-detection.
+For these example smoke tests, the `ballast` wrapper command must resolve on your PATH. If you only have the backend installed locally, add an alias such as `alias ballast=ballast-go`, or run `ballast-go install --language <lang> ...` directly instead of wrapper auto-detection.
 
 ## Layout
 
