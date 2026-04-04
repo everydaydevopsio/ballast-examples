@@ -5,6 +5,8 @@ AGENTS.md
 **/AGENTS.md
 
 # Agent output directories (all depths)
+.ballast/
+**/.ballast/
 .cursor/
 **/.cursor/
 .claude/
