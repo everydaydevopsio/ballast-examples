@@ -1,8 +1,17 @@
 # ballast-examples
 
-Sample repositories for smoke testing Ballast language detection and install flows.
+Sample repositories for smoke testing [Ballast](https://github.com/everydaydevopsio/ballast) language detection and rule installation flows.
 
-TypeScript, Python, and Go participate in wrapper auto-detection today. The Ansible sample exercises the shared language-profile support through `ballast-go install --language ansible`.
+This repository contains minimal project samples in various languages and frameworks to test how Ballast:
+- Auto-detects project languages and frameworks
+- Installs language-specific agent rules
+- Generates configuration for AI editors (Cursor, Codeium)
+
+## Language Support
+
+- **TypeScript, Python, and Go** — Automatic language detection via wrapper
+- **Ansible** — Explicit language specification via `ballast-go install --language ansible`
+- **Terraform** — Automatic IaC language detection
 
 ## Ballast
 
@@ -21,13 +30,18 @@ If you only have `ballast-go` installed and want the `ballast` command name loca
 alias ballast=ballast-go
 ```
 
-## Layout
+## Sample Directories
 
-- `go-sample/`
-- `python-sample/`
-- `typescript-sample/`
-- `ansible-sample/`
-  Includes both `hosts.ini` and `hosts.ini.example` so the fixture is runnable without renaming files.
+Each sample is a minimal project that demonstrates Ballast's language detection and rule installation:
+
+- **`go-sample/`** — Go application with automatic language detection
+- **`python-sample/`** — Python application with automatic language detection
+- **`typescript-sample/`** — TypeScript/Node.js application with automatic language detection
+- **`terraform-sample/`** — Terraform infrastructure code with automatic IaC detection
+- **`ansible-sample/`** — Ansible playbooks and roles (requires explicit `--language ansible`)
+- **`empty-sample/`** — Empty directory for testing Ballast initialization before code exists
+
+See individual README.md files in each sample for details.
 
 ## Run Smoke Tests
 
@@ -41,10 +55,11 @@ From repo root:
 
 This runs:
 
-- `ballast install --target cursor --agent linting --yes` in `go-sample/`, `python-sample/`, and `typescript-sample/`
+- `ballast install --target cursor --agent linting --yes` in `go-sample/`, `python-sample/`, `typescript-sample/`, and `terraform-sample/`
 - `ballast-go install --language ansible --target cursor --agent linting --yes` in `ansible-sample/`
+- `ballast install --target cursor --agent linting --yes` in `empty-sample/` (tests initialization without existing code)
 
-Prerequisite: `ballast` must resolve on your PATH for the Go/Python/TypeScript samples, and `ballast-go` must also be available for the Ansible sample.
+Prerequisite: `ballast` must resolve on your PATH for auto-detected samples, and `ballast-go` must also be available for the Ansible sample.
 
 ### 2) Run in Docker (preinstalled CLIs)
 
@@ -74,20 +89,24 @@ gh workflow run examples-smoke.yml --repo everydaydevopsio/ballast
 
 ## CI Smoke Matrix
 
-GitHub Actions runs smoke tests on push/PR in `ballast` for all four samples.
+GitHub Actions runs smoke tests on push/PR in `ballast` for all samples.
 
 Workflow file: `ballast/.github/workflows/examples-smoke.yml`
 
 Each matrix job:
 
 - builds `ballast` wrapper + language CLIs from source
-- runs `ballast install --target cursor --agent linting --yes` for Go/Python/TypeScript
+- runs `ballast install --target cursor --agent linting --yes` for Go/Python/TypeScript/Terraform/empty samples
 - runs `ballast-go install --language ansible --target cursor --agent linting --yes` for Ansible
-- verifies generated rule file
+- verifies generated rule files in `.cursor/rules/`
 
 ## Expected Output
 
-- `go-sample/` gets `.cursor/rules/go-linting.mdc`
-- `python-sample/` gets `.cursor/rules/python-linting.mdc`
-- `typescript-sample/` gets `.cursor/rules/typescript-linting.mdc`
-- `ansible-sample/` gets `.cursor/rules/ansible-linting.mdc`
+When Ballast runs successfully on each sample, it generates rule files:
+
+- `go-sample/` → `.cursor/rules/go-linting.mdc`
+- `python-sample/` → `.cursor/rules/python-linting.mdc`
+- `typescript-sample/` → `.cursor/rules/typescript-linting.mdc`
+- `terraform-sample/` → `.cursor/rules/terraform-linting.mdc`
+- `ansible-sample/` → `.cursor/rules/ansible-linting.mdc`
+- `empty-sample/` → `.cursor/rules/` (tests baseline rule installation)
