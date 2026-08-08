@@ -29,6 +29,23 @@ dist/
 bin/
 *.test
 
+# Dart/Flutter generated files
+.dart_tool/
+**/.dart_tool/
+.flutter-plugins
+**/.flutter-plugins
+.flutter-plugins-dependencies
+**/.flutter-plugins-dependencies
+build/
+**/build/
+coverage/
+**/coverage/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/ephemeral/
+**/ios/Runner/GeneratedPluginRegistrant.*
+**/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+
 # OS/editor
 .DS_Store
 .vscode/
