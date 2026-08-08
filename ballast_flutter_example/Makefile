@@ -1,5 +1,8 @@
-FLUTTER_HOME := /home/marka/development/flutter
-FLUTTER := "$(FLUTTER_HOME)/bin/flutter"
+ifdef FLUTTER_HOME
+FLUTTER ?= $(FLUTTER_HOME)/bin/flutter
+else
+FLUTTER ?= flutter
+endif
 FLUTTER_REQUIRED_VERSION := 3.44.8
 
 ANDROID_SDK_ROOT ?= $(or $(ANDROID_HOME),/opt/android-sdk)
@@ -79,10 +82,10 @@ setup-emulator:
 check-flutter-version:
 	@ACTUAL=$$($(FLUTTER) --version 2>&1 | awk '/^Flutter [0-9]/{print $$2; exit}'); \
 	if [ -z "$$ACTUAL" ]; then \
-		echo "ERROR: Could not determine Flutter version at $(FLUTTER_HOME)"; exit 1; \
+		echo "ERROR: Could not determine Flutter version from $(FLUTTER)"; exit 1; \
 	fi; \
 	echo "  Detected Flutter $$ACTUAL (required: >=$(FLUTTER_REQUIRED_VERSION))"; \
 	awk -v a="$$ACTUAL" -v r="$(FLUTTER_REQUIRED_VERSION)" 'BEGIN{split(a,av,".");split(r,rv,".");for(i=1;i<=3;i++){sub(/[^0-9].*/,"",av[i]);sub(/[^0-9].*/,"",rv[i])};if(av[1]+0>rv[1]+0)exit 0;if(av[1]+0<rv[1]+0)exit 1;if(av[2]+0>rv[2]+0)exit 0;if(av[2]+0<rv[2]+0)exit 1;if(av[3]+0>=rv[3]+0)exit 0;exit 1}' /dev/null || \
-	{ echo "ERROR: Flutter $$ACTUAL does not satisfy >=$$FLUTTER_REQUIRED_VERSION"; exit 1; }
+	{ echo "ERROR: Flutter $$ACTUAL does not satisfy >=$(FLUTTER_REQUIRED_VERSION)"; exit 1; }
 
 .PHONY: check-flutter-version

@@ -10,6 +10,10 @@ concurrency:
   group: format-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    working-directory: ballast_flutter_example
+
 jobs:
   format:
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false

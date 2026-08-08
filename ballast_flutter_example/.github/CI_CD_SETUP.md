@@ -4,11 +4,11 @@ This document provides instructions for setting up and configuring the CI/CD wor
 
 ## Overview
 
-The CI/CD workflows in this repository include:
+The CI/CD workflows live in the repository root under `.github/workflows/` and run from the `ballast_flutter_example` working directory. They include:
 
-- **Lint Workflow** (`lint.yml`): Runs `flutter analyze` on pull requests and pushes
-- **Format Workflow** (`format.yml`): Checks code formatting with `dart format`
-- **Test Workflow** (`test.yml`): Runs unit tests
+- **Lint Workflow** (`flutter-lint.yml`): Runs `flutter analyze` on pull requests and pushes
+- **Format Workflow** (`flutter-format.yml`): Checks code formatting with `dart format`
+- **Test Workflow** (`flutter-test.yml`): Runs unit tests
 - **Build Workflows**: Platform-specific build workflows for enabled platforms
 
 ## Prerequisites
@@ -124,7 +124,7 @@ All build workflows can be triggered manually via **Actions → [Workflow Name] 
 
 3. **Dependabot not creating PRs**
    - Ensure Dependabot is enabled in repository settings
-   - Check that `dependabot.yml` is in the `.github` directory
+   - Check that the root `.github/dependabot.yml` includes `/ballast_flutter_example`
 
 ### Getting Help
 

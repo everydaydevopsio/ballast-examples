@@ -19,6 +19,23 @@ updates:
         update-types:
           - "version-update:semver-major"
 
+  - package-ecosystem: "pub"
+    directory: "/ballast_flutter_example"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    groups:
+      flutter-dependencies:
+        patterns:
+          - "flutter*"
+          - "dart*"
+      dev-dependencies:
+        patterns:
+          - "*_test"
+          - "*test*"
+          - "mockito"
+          - "build_runner"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

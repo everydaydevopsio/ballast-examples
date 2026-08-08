@@ -1,4 +1,4 @@
-name: Build Android
+name: Build iOS
 
 on:
   workflow_dispatch:
@@ -6,18 +6,16 @@ on:
     tags:
       - 'v*.*.*'
 
+defaults:
+  run:
+    working-directory: ballast_flutter_example
+
 jobs:
-  build-android:
-    runs-on: ubuntu-latest
+  build-ios:
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -34,22 +32,12 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Build iOS
+        run: flutter build ios --release --no-codesign
 
-      - name: Build AAB
-        run: flutter build appbundle --release
-
-      - name: Upload APK
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: android-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
-          if-no-files-found: error
-
-      - name: Upload AAB
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-aab
-          path: build/app/outputs/bundle/release/app-release.aab
+          name: ios-build
+          path: ballast_flutter_example/build/ios/iphoneos/Runner.app
           if-no-files-found: error
